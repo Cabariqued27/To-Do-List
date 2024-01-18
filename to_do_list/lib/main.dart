@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:to_do_list/screens/login_screen.dart';
@@ -7,8 +8,8 @@ Future<void> main() async {
   await Firebase.initializeApp();
 
   try {
-    final app = Firebase.app();
-    print("Firebase se ha inicializado correctamente: ${app.name}");
+    final db = FirebaseFirestore.instance;
+    print("Firebase se ha inicializado correctamente: ${db}");
   } catch (e) {
     print("Error al inicializar Firebase: $e");
   }
@@ -23,8 +24,8 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => userData),
-        ChangeNotifierProvider(create: (_) => noteData),
+        ChangeNotifierProvider(create: (_) => userModel),
+        ChangeNotifierProvider(create: (_) => noteModel),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
