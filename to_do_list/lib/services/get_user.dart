@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import '../models/User.dart';
@@ -13,37 +14,17 @@ class UserData extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getUsersFromCache() async {
-    // Obtener referencia a un nodo específico en la base de datos
-    final ref = FirebaseDatabase.instance.ref().child('Users');
+    Future<void> getNotesFromDB() async {
+    await FirebaseFirestore.instance.collection("users").get().then((event) {
+      for (var doc in event.docs) {
+        UserM note = UserM(
+          id: doc.id,
+          name: doc['name'],
+        );
 
-    // Escuchar cambios en los datos del nodo (en tiempo real)
-    ref.onValue.listen((user) {
-      _users.clear();
-      if (user.snapshot.exists) {
-        final Map<dynamic, dynamic> data =
-            user.snapshot.value as Map<dynamic, dynamic>;
-
-        data.forEach((key, value) {
-          String date = value['date'] ?? '';
-          String description = value['description'] ?? '';
-          String name = value['name'] ?? '';
-
-          print('User ID: $key');
-          print('Date: $date');
-          print('Description: $description');
-          print('Name: $name');
-          UserM newUser = UserM(
-            id:key,
-            name: name,
-            description: description,
-            date: date,
-          );
-          addUser(newUser);
-        });
-      } else {
-        print('No data available.');
+        _users.add(note);
       }
+      notifyListeners();
     });
   }
 }
