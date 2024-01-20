@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import '../models/note.dart';
@@ -13,37 +14,18 @@ class NoteData extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getNotesFromCache() async {
-    // Obtener referencia a un nodo específico en la base de datos
-    final ref = FirebaseDatabase.instance.ref().child('Notes');
+  Future<void> getNotesFromDB() async {
+    await FirebaseFirestore.instance.collection("Notes").get().then((event) {
+      for (var doc in event.docs) {
+        Note note = Note(
+          id: doc.id,
+          title: doc['title'],
+          description: doc['description'], 
+        );
 
-    // Escuchar cambios en los datos del nodo (en tiempo real)
-    ref.onValue.listen((note) {
-      _notes.clear();
-      if (Note.snapshot.exists) {
-        final Map<dynamic, dynamic> data =
-            Note.snapshot.value as Map<dynamic, dynamic>;
-
-        data.forEach((key, value) {
-          String date = value['date'] ?? '';
-          String description = value['description'] ?? '';
-          String name = value['name'] ?? '';
-
-          print('Note ID: $key');
-          print('Date: $date');
-          print('Description: $description');
-          print('Name: $name');
-          Note newNote = Note(
-            id:key,
-            name: name,
-            description: description,
-            date: date,
-          );
-          addNote(newNote);
-        });
-      } else {
-        print('No data available.');
+        _notes.add(note);
       }
+      notifyListeners();
     });
   }
 }
