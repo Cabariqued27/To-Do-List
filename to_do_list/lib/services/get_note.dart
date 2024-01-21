@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
 import '../models/note.dart';
 
 class NoteData extends ChangeNotifier {
@@ -10,7 +9,9 @@ class NoteData extends ChangeNotifier {
   Future<void> addNote(Note note) async {
     _notes.add(note);
     //await Note.save();
-    print(note.id);
+    if (kDebugMode) {
+      print(note.id);
+    }
     notifyListeners();
   }
 

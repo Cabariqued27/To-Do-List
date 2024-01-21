@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do_list/firebase_options.dart';
@@ -12,9 +13,13 @@ Future<void> main() async {
 
   try {
     final db = FirebaseFirestore.instance;
-    print("Firebase se ha inicializado correctamente: ${db}");
+    if (kDebugMode) {
+      print("Firebase se ha inicializado correctamente: ${db}");
+    }
   } catch (e) {
-    print("Error al inicializar Firebase: $e");
+    if (kDebugMode) {
+      print("Error al inicializar Firebase: $e");
+    }
   }
 
   runApp(const MainApp());
@@ -32,7 +37,7 @@ class MainApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(useMaterial3: true, colorSchemeSeed: Colors.white),
-        home: NoteScreen(),
+        home: LoginScreen(),
       ),
     );
   }

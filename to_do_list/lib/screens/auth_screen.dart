@@ -15,12 +15,13 @@ class AuthScreen extends StatelessWidget {
         builder: (context, snapshot) {
           // user is logged in
           if (snapshot.hasData) {
-            return NoteScreen();
+            User? user = snapshot.data;
+            return NoteScreen(uid: user?.uid ?? ''); // Pasa la uid a NoteScreen
           }
 
           // user is NOT logged in
           else {
-            return LoginScreen();
+            return const LoginScreen();
           }
         },
       ),

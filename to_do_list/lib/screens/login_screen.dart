@@ -6,7 +6,7 @@ import 'package:to_do_list/widgets/my_button.dart';
 import 'package:to_do_list/widgets/my_textfield.dart';
 
 class LoginScreen extends StatefulWidget {
-  LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -40,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
       // Navigate to AuthPage after successful login
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => AuthScreen()),
+        MaterialPageRoute(builder: (context) => const AuthScreen()),
       );
     } on FirebaseAuthException catch (e) {
       // pop the loading circle
@@ -167,13 +167,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
+                    const Text(
                       '¿No está afiliado?',
                       style: TextStyle(
                         color: Colors.white,
                       ),
                     ),
-                    SizedBox(width: 4),
+                    const SizedBox(width: 4),
                     GestureDetector(
                       onTap: () {
                         // Navegar hacia la página de registro cuando se haga clic en el texto
@@ -186,7 +186,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         );
                       },
-                      child: Text(
+                      child: const Text(
                         'Regístrese ahora',
                         style: TextStyle(
                           color: Colors.blue,

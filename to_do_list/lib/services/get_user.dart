@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
 import '../models/User.dart';
 
 class UserData extends ChangeNotifier {
@@ -10,7 +9,9 @@ class UserData extends ChangeNotifier {
   Future<void> addUser(UserM user) async {
     _users.add(user);
     //await User.save();
-    print(user.id);
+    if (kDebugMode) {
+      print(user.id);
+    }
     notifyListeners();
   }
 
