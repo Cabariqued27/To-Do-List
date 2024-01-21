@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do_list/firebase_options.dart';
 import 'package:to_do_list/screens/login_screen.dart';
-import 'package:to_do_list/screens/note_screen.dart';
+import 'package:to_do_list/screens/add_note_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,7 +14,7 @@ Future<void> main() async {
   try {
     final db = FirebaseFirestore.instance;
     if (kDebugMode) {
-      print("Firebase se ha inicializado correctamente: ${db}");
+      print("Firebase se ha inicializado correctamente: $db");
     }
   } catch (e) {
     if (kDebugMode) {
@@ -37,7 +37,7 @@ class MainApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(useMaterial3: true, colorSchemeSeed: Colors.white),
-        home: NoteScreen(uid: '',),
+        home: const LoginScreen(),
       ),
     );
   }

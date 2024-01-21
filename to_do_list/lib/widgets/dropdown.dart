@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
-
 const List<String> list = <String>['Pendiente', 'Completado'];
 
 class DropdownMenuApp extends StatelessWidget {
-  const DropdownMenuApp({super.key});
+  const DropdownMenuApp({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,8 +11,8 @@ class DropdownMenuApp extends StatelessWidget {
       theme: ThemeData(useMaterial3: true),
       home: Scaffold(
         appBar: AppBar(title: const Text('DropdownMenu Sample')),
-        body: const Center(
-          child: DropdownMenuExample(),
+        body: Center(
+          child: DropdownMenuExample(onStatusSelected: (String ) {  },), // Remove 'const' here
         ),
       ),
     );
@@ -21,7 +20,9 @@ class DropdownMenuApp extends StatelessWidget {
 }
 
 class DropdownMenuExample extends StatefulWidget {
-  const DropdownMenuExample({super.key});
+  final Function(String) onStatusSelected;
+
+  const DropdownMenuExample({Key? key, required this.onStatusSelected}) : super(key: key);
 
   @override
   State<DropdownMenuExample> createState() => _DropdownMenuExampleState();
@@ -32,16 +33,19 @@ class _DropdownMenuExampleState extends State<DropdownMenuExample> {
 
   @override
   Widget build(BuildContext context) {
-    return DropdownMenu<String>(
-      initialSelection: list.first,
-      onSelected: (String? value) {
-        // This is called when the user selects an item.
+    return DropdownButton<String>(
+      value: dropdownValue,
+      onChanged: (String? value) {
         setState(() {
           dropdownValue = value!;
+          widget.onStatusSelected(dropdownValue);
         });
       },
-      dropdownMenuEntries: list.map<DropdownMenuEntry<String>>((String value) {
-        return DropdownMenuEntry<String>(value: value, label: value);
+      items: list.map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
       }).toList(),
     );
   }
