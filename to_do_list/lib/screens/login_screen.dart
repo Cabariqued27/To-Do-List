@@ -126,7 +126,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 MyTextField(
                   controller: _emailController,
                   hintText: 'Correo electrónico',
-                  obscureText: false,
+                  obscureText: false, readOnly: false,
                 ),
 
                 const SizedBox(height: 10),
@@ -135,7 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 MyTextField(
                   controller: _passwordController,
                   hintText: 'Contraseña',
-                  obscureText: true,
+                  obscureText: true, readOnly: false,
                 ),
 
                 const SizedBox(height: 10),

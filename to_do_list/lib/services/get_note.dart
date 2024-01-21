@@ -10,7 +10,7 @@ class NoteData extends ChangeNotifier {
     _notes.add(note);
     //await Note.save();
     if (kDebugMode) {
-      print(note.id);
+      print(note.idu);
     }
     notifyListeners();
   }
@@ -19,7 +19,7 @@ class NoteData extends ChangeNotifier {
     await FirebaseFirestore.instance.collection("Notes").get().then((event) {
       for (var doc in event.docs) {
         Note note = Note(
-          id: doc.id,
+          /*idu: doc.id,*/
           title: doc['title'],
           description: doc['description'], 
         );

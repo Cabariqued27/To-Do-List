@@ -112,25 +112,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 MyTextField(
                   controller: _emailController,
                   hintText: 'Correo electrónico',
-                  obscureText: false,
+                  obscureText: false, readOnly: false,
                 ),
                 const SizedBox(height: 10),
                 MyTextField(
                   controller: _passwordController,
                   hintText: 'Contraseña',
-                  obscureText: true,
+                  obscureText: true, readOnly: false,
                 ),
                 const SizedBox(height: 10),
                 MyTextField(
                   controller: _confirmpasswordController,
                   hintText: 'Confirmar Contraseña',
-                  obscureText: true,
+                  obscureText: true, readOnly: false,
                 ),
                 const SizedBox(height: 10),
                 MyTextField(
                   controller: _nameController,
                   hintText: 'Nombre',
-                  obscureText: false,
+                  obscureText: false, readOnly: false,
                 ),
                 const SizedBox(height: 10),
                 MyButton(
