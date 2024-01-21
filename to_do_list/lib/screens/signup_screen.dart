@@ -93,7 +93,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.orange,
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Center(
@@ -102,34 +102,34 @@ class _RegisterScreenState extends State<RegisterScreen> {
               children: [
                 const SizedBox(height: 50),
                 const Text(
-                  'Registro de Voluntarios',
+                  'Registro de Usuarios',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Color.fromARGB(255, 48, 89, 161),
                     fontSize: 16,
                   ),
                 ),
                 const SizedBox(height: 25),
                 MyTextField(
                   controller: _emailController,
-                  hintText: 'Correo electrónico',
+                  labelText: 'Correo electrónico',
                   obscureText: false, readOnly: false,
                 ),
                 const SizedBox(height: 10),
                 MyTextField(
                   controller: _passwordController,
-                  hintText: 'Contraseña',
+                  labelText: 'Contraseña',
                   obscureText: true, readOnly: false,
                 ),
                 const SizedBox(height: 10),
                 MyTextField(
                   controller: _confirmpasswordController,
-                  hintText: 'Confirmar Contraseña',
+                  labelText: 'Confirmar Contraseña',
                   obscureText: true, readOnly: false,
                 ),
                 const SizedBox(height: 10),
                 MyTextField(
                   controller: _nameController,
-                  hintText: 'Nombre',
+                  labelText: 'Nombre',
                   obscureText: false, readOnly: false,
                 ),
                 const SizedBox(height: 10),

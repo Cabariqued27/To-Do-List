@@ -103,7 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.orange, // Set background color to orange
+      backgroundColor: Color.fromARGB(255, 255, 255, 255), // Set background color to orange
       body: SafeArea(
         child: SingleChildScrollView(
           child: Center(
@@ -115,17 +115,17 @@ class _LoginScreenState extends State<LoginScreen> {
                 const Text(
                   'Bienvenido',
                   style: TextStyle(
-                    color: Colors.white, // Set text color to white
+                    color: Color.fromARGB(255, 48, 89, 161), // Set text color to white
                     fontSize: 16,
                   ),
                 ),
 
-                const SizedBox(height: 25),
+                const SizedBox(height: 30),
 
                 // email textfield
                 MyTextField(
                   controller: _emailController,
-                  hintText: 'Correo electrónico',
+                  labelText: 'Correo electrónico',
                   obscureText: false, readOnly: false,
                 ),
 
@@ -134,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 // password textfield
                 MyTextField(
                   controller: _passwordController,
-                  hintText: 'Contraseña',
+                  labelText: 'Contraseña',
                   obscureText: true, readOnly: false,
                 ),
 
@@ -149,7 +149,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Text(
                         '¿Ha olvidado su contraseña?',
                         style: TextStyle(
-                            color: Colors.white), // Set text color to white
+                            color: Color.fromARGB(255, 48, 89, 161)), // Set text color to white
                       ),
                     ],
                   ),
@@ -170,7 +170,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     const Text(
                       '¿No está afiliado?',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Color.fromARGB(255, 48, 89, 161),
                       ),
                     ),
                     const SizedBox(width: 4),

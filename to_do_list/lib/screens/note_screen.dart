@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:to_do_list/models/note.dart';
 import 'package:to_do_list/services/get_note.dart';
+import 'package:to_do_list/widgets/dropdown.dart';
 import 'package:to_do_list/widgets/my_button.dart';
 import 'package:to_do_list/widgets/my_textfield.dart';
 
@@ -72,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.orange, // Set background color to orange
+      backgroundColor:Color.fromARGB(255, 255, 255, 255), // Set background color to orange
       body: SafeArea(
         child: SingleChildScrollView(
           child: Center(
@@ -83,37 +84,32 @@ class _MyHomePageState extends State<MyHomePage> {
                 const Text(
                   'Gestor de notas',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Color.fromARGB(255, 48, 89, 161),
                     fontSize: 16,
                   ),
                 ),
                 const SizedBox(height: 25),
                 MyTextField(
                   controller: _nameTileController,
-                  hintText: 'Ingresa el titulo de tu nota',
+                  labelText: 'Título',
                   obscureText: false,
                   readOnly: false,
                 ),
                 const SizedBox(height: 10),
                 MyTextField(
                   controller: _descriptionController,
-                  hintText: 'Ingresa la descripción',
+                  labelText: 'Descripción',
                   obscureText: false,
                   readOnly: false,
                 ),
                 const SizedBox(height: 10),
-                MyTextField(
-                  controller: _statusController,
-                  hintText: 'Ingresa el estado',
-                  obscureText: false,
-                  readOnly: false,
+                const DropdownMenuExample(
                 ),
                 const SizedBox(height: 10),
                 MyTextField(
                   controller: _dateController,
-                  hintText: _dateController.text,
                   obscureText: false,
-                  readOnly: true,
+                  readOnly: true, labelText: '',
                 ),
                 const SizedBox(height: 10),
                 MyButton(

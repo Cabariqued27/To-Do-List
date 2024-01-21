@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 class MyTextField extends StatelessWidget {
   final controller;
-  final String hintText;
+  final String labelText;
   final bool obscureText;
   final bool readOnly;
 
   const MyTextField({
     Key? key,
     required this.controller,
-    required this.hintText,
+    required this.labelText,
     required this.obscureText,
     required this.readOnly,
   }) : super(key: key);
@@ -31,7 +31,7 @@ class MyTextField extends StatelessWidget {
           ),
           fillColor: Colors.grey.shade200,
           filled: true,
-          hintText: hintText,
+          labelText: labelText,
           hintStyle: TextStyle(color: Colors.grey[500]),
         ),
       ),
