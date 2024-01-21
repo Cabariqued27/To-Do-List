@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 import 'package:to_do_list/services/get_note.dart';
-import 'dart:io';
+
 
 NoteData noteModel = NoteData();
 
