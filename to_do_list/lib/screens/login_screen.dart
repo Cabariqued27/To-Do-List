@@ -111,19 +111,6 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const SizedBox(height: 50),
-
-                // logo
-
-                // logo using Image widget
-                Image.asset(
-                  'lib/assets/logo.png', // Replace with the actual path to your image asset
-                  width: 100,
-                  height: 100,
-                  color: Colors.white, // Set image color to white
-                ),
-
-                const SizedBox(height: 50),
-
                 // welcome back, you've been missed!
                 const Text(
                   'Bienvenido',

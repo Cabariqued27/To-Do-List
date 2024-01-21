@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:to_do_list/services/get_note.dart';
-
+import 'package:to_do_list/widgets/my_button.dart';
+import 'package:to_do_list/widgets/my_textfield.dart';
 
 NoteData noteModel = NoteData();
 
 void main() {
-  runApp(MyApp());
+  runApp(NoteScreen());
 }
 
-class MyApp extends StatelessWidget {
+class NoteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -28,10 +29,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  TextEditingController _eventNameController = TextEditingController();
-  TextEditingController _descriptionController = TextEditingController();
-  TextEditingController _dateController = TextEditingController();
+  final TextEditingController _nameTileController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
+
+  get signUserIn => null;
 
   @override
   void initState() {
@@ -41,100 +43,49 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: Colors.orange,
-          width: 10.0,
-        ),
-      ),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('Gestión de Eventos'),
-        ),
-        body: SingleChildScrollView(
-          padding: EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Form(
-                key: _formKey,
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.symmetric(vertical: 5),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.orange,
-                          width: 3.0,
-                        ),
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      child: TextFormField(
-                        controller: _eventNameController,
-                        decoration:
-                            InputDecoration(labelText: 'Nombre del Evento'),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Por favor, ingresa un nombre para el evento.';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.symmetric(vertical: 5),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.orange,
-                          width: 3.0,
-                        ),
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      child: TextFormField(
-                        controller: _descriptionController,
-                        decoration: InputDecoration(
-                            labelText: 'Descripción del Evento'),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Por favor, ingresa una descripción para el evento.';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.symmetric(vertical: 5),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.orange,
-                          width: 3.0,
-                        ),
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      child: TextFormField(
-                        controller: _dateController,
-                        decoration:
-                            InputDecoration(labelText: 'Fecha del Evento'),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Por favor, ingresa una fecha para el evento.';
-                          }
-                          return null;
-                        },
-                        readOnly: true,
-                      ),
-                    ),
-                    
-                  ],
+    return Scaffold(
+      backgroundColor: Colors.orange, // Set background color to orange
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(height: 50),
+                const Text(
+                  'Gestor de notas',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
                 ),
-              ),
-              SizedBox(height: 20),
-              Text(
-                'Eventos Registrados:',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-            ],
+                const SizedBox(height: 25),
+                MyTextField(
+                  controller: _nameTileController,
+                  hintText: 'Ingresa el titulo de tu nota',
+                  obscureText: false,
+                ),
+                const SizedBox(height: 10),
+                MyTextField(
+                  controller: _descriptionController,
+                  hintText: 'Ingresa la información de tu nota',
+                  obscureText: false,
+                ),
+                const SizedBox(height: 10),
+                MyTextField(
+                  controller: _dateController,
+                  hintText: _dateController.text,
+                  obscureText: false,
+                  editable:false,
+                ),
+                const SizedBox(height: 10),
+                MyButton(
+                  onTap: signUserIn,
+                  buttonText: 'Agregar',
+                ),
+                const SizedBox(height: 50),
+              ],
+            ),
           ),
         ),
       ),

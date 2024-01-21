@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:to_do_list/screens/login_screen.dart';
+import 'package:to_do_list/screens/note_screen.dart';
 
 
 class AuthScreen extends StatelessWidget {
@@ -14,7 +15,7 @@ class AuthScreen extends StatelessWidget {
         builder: (context, snapshot) {
           // user is logged in
           if (snapshot.hasData) {
-            return LoginScreen();
+            return NoteScreen();
           }
 
           // user is NOT logged in
