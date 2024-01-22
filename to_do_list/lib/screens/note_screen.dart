@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:to_do_list/models/note.dart';
+import 'package:to_do_list/screens/add_note_screen.dart';
 import 'package:to_do_list/services/get_note.dart';
 import 'package:to_do_list/widgets/dropdown.dart';
 import 'package:to_do_list/widgets/my_button.dart';
@@ -50,18 +51,22 @@ class _MyHomePageState extends State<MyHomePage> {
     _dateController.text = DateFormat('dd/MM/yyyy').format(DateTime.now());
     noteCollection = FirebaseFirestore.instance.collection('notes');
     print(noteModel.getNotesFromDB(uid));
+    noteModel.printNotes();
   }
 
-  
-  Future crear() async {
-  print(noteModel.getNotesFromDB(uid));
-}
+  Future Update() async {
+    print(noteModel.getNotesFromDB(uid));
+    noteModel.printNotes();
+  }
+
+  Future Create() async {
+    return AddNoteScreen(uid: uid);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:
-          const Color.fromARGB(255, 255, 255, 255), // Set background color to orange
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Center(
@@ -77,10 +82,32 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
                 MyButton(
-                  onTap: crear,
-                  buttonText: 'Agregar',
+                  onTap: Update,
+                  buttonText: 'Actualizar',
                 ),
-                const SizedBox(height: 50),
+                const SizedBox(height: 20), // Añade espacio entre los botones
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AddNoteScreen(uid: uid),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: const Color.fromARGB(255, 255, 255,
+                        255), backgroundColor: const Color.fromARGB(
+                        255, 48, 89, 161), // Cambia el color del texto a blanco
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 16,
+                        horizontal: 32), // Ajusta el tamaño del botón
+                  ),
+                  child: const Text('Agregar nota',
+                      style: TextStyle(
+                          fontSize: 18)), // Ajusta el tamaño del texto
+                ),
+                const SizedBox(height: 30),
               ],
             ),
           ),

@@ -1,4 +1,5 @@
 class Note {
+  String id;
   String idu;
   String title;
   String description;
@@ -6,6 +7,7 @@ class Note {
   String date;
 
   Note({
+    this.id ='',
     this.idu = '',
     this.title = '',
     this.description = '',
