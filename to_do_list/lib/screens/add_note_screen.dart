@@ -54,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   
-  Future crear() async {/*
+  Future crear() async {
   // Validar que los campos de título y descripción no estén vacíos
   if (_titleController.text.trim().isEmpty || _descriptionController.text.trim().isEmpty) {
     // Muestra un mensaje de error si alguno de los campos está vacío
@@ -96,8 +96,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   // Limpiar los controladores después de agregar la nota
   _titleController.clear();
-  _descriptionController.clear();*/
-  print(noteModel.getNotesFromDB());
+  _descriptionController.clear();
+  print(noteModel.getNotesFromDB(uid));
 }
 
   @override

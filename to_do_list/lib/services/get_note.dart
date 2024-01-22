@@ -15,8 +15,8 @@ class NoteData extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getNotesFromDB() async {
-    FirebaseFirestore.instance.collection("notes").where("Idu", isEqualTo: "GSaTsnC0mAbo1HUEqy53xAEyJbM2").get().then(
+  Future<void> getNotesFromDB(uid) async {
+    FirebaseFirestore.instance.collection("notes").where("Idu", isEqualTo: uid).get().then(
       (querySnapshot) {
         print("Successfully completed");
         for (var docSnapshot in querySnapshot.docs) {

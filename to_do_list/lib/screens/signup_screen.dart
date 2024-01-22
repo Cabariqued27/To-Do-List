@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:to_do_list/models/user.dart';
+import 'package:to_do_list/screens/login_screen.dart';
 import 'package:to_do_list/widgets/my_button.dart';
 import 'package:to_do_list/widgets/my_textfield.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -83,6 +84,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       }
     }
     Navigator.pop(context);
+    return const LoginScreen();
   }
 
   bool passwordConfirmed() {
