@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:to_do_list/models/note.dart';
@@ -38,9 +37,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final TextEditingController _nameTileController = TextEditingController();
+  final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
-  TextEditingController _statusController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
   late CollectionReference noteCollection;
   final String uid;
@@ -55,27 +53,53 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future crear() async {
-    Note newNote = Note(
-      idu: uid,
-      title: _nameTileController.text.trim(),
-      description: _descriptionController.text.trim(),
-      status: selectedStatus,
-      date: _dateController.text.trim(),
+  // Validar que los campos de título y descripción no estén vacíos
+  if (_titleController.text.trim().isEmpty || _descriptionController.text.trim().isEmpty) {
+    // Muestra un mensaje de error si alguno de los campos está vacío
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Por favor, completa los campos de título y descripción.'),
+        duration: Duration(seconds: 3),
+      ),
     );
-    await noteCollection.doc().set({
-      'Idu': newNote.idu,
-      'Title': newNote.title,
-      'Description': newNote.description,
-      'Status': newNote.status,
-      'Date': newNote.date,
-    });
+    return; // Salir de la función si hay campos vacíos
   }
+
+  // Continuar con la creación de la nota si los campos no están vacíos
+  Note newNote = Note(
+    idu: uid,
+    title: _titleController.text.trim(),
+    description: _descriptionController.text.trim(),
+    status: selectedStatus,
+    date: _dateController.text.trim(),
+  );
+
+  await noteCollection.doc().set({
+    'Idu': newNote.idu,
+    'Title': newNote.title,
+    'Description': newNote.description,
+    'Status': newNote.status,
+    'Date': newNote.date,
+  });
+
+  // Muestra el mensaje después de agregar la nota
+  ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(
+      content: Text('Nota agregada con éxito'),
+      duration: Duration(seconds: 3),
+    ),
+  );
+
+  // Limpiar los controladores después de agregar la nota
+  _titleController.clear();
+  _descriptionController.clear();
+}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor:
-          Color.fromARGB(255, 255, 255, 255), // Set background color to orange
+          const Color.fromARGB(255, 255, 255, 255), // Set background color to orange
       body: SafeArea(
         child: SingleChildScrollView(
           child: Center(
@@ -92,7 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 const SizedBox(height: 25),
                 MyTextField(
-                  controller: _nameTileController,
+                  controller: _titleController,
                   labelText: 'Título',
                   obscureText: false,
                   readOnly: false,

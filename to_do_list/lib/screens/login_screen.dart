@@ -85,14 +85,12 @@ class _LoginScreenState extends State<LoginScreen> {
       context: context,
       builder: (context) {
         return const AlertDialog(
-          backgroundColor: Color.fromARGB(
-              255, 197, 197, 197), // Set background color to deep orange
+          backgroundColor: Color.fromARGB(255, 30, 23, 23), // Set background color to deep orange
           title: Center(
             child: Text(
               'Contraseña incorrecta',
               style: TextStyle(
-                  color: Color.fromARGB(
-                      255, 65, 23, 23)), // Set text color to white
+                  color: Color.fromARGB(255, 184, 174, 174)), // Set text color to white
             ),
           ),
         );
