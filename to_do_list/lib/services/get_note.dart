@@ -16,19 +16,14 @@ class NoteData extends ChangeNotifier {
   }
 
   Future<void> getNotesFromDB() async {
-    await FirebaseFirestore.instance.collection("notes").get().then((event) {
-      for (var doc in event.docs) {
-        Note note = Note(
-          idu: doc.id,
-          title: doc['title'],
-          description: doc['description'], 
-        );
-        
-          print(note);
-        
-        _notes.add(note);
-      }
-      notifyListeners();
-    });
+    FirebaseFirestore.instance.collection("notes").where("Idu", isEqualTo: "GSaTsnC0mAbo1HUEqy53xAEyJbM2").get().then(
+      (querySnapshot) {
+        print("Successfully completed");
+        for (var docSnapshot in querySnapshot.docs) {
+          print('${docSnapshot.id} => ${docSnapshot.data()}');
+        }
+      },
+      onError: (e) => print("Error completing: $e"),
+    );
   }
 }
