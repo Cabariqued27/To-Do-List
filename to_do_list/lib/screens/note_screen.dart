@@ -4,9 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:to_do_list/models/note.dart';
 import 'package:to_do_list/screens/add_note_screen.dart';
 import 'package:to_do_list/services/get_note.dart';
-import 'package:to_do_list/widgets/dropdown.dart';
 import 'package:to_do_list/widgets/my_button.dart';
-import 'package:to_do_list/widgets/my_textfield.dart';
 
 NoteData noteModel = NoteData();
 
@@ -50,17 +48,25 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     _dateController.text = DateFormat('dd/MM/yyyy').format(DateTime.now());
     noteCollection = FirebaseFirestore.instance.collection('notes');
-    print(noteModel.getNotesFromDB(uid));
-    noteModel.printNotes();
+    _updateNotes(); // Llama a la función _updateNotes en initState
   }
 
-  Future Update() async {
-    print(noteModel.getNotesFromDB(uid));
-    noteModel.printNotes();
+  Future<void> _updateNotes() async {
+    await noteModel.getNotesFromDB(uid);
+    setState(() {}); // Actualiza el estado para reconstruir la interfaz con las nuevas notas
   }
 
-  Future Create() async {
-    return AddNoteScreen(uid: uid);
+  Future<void> _createNote() async {
+    // Abre la pantalla para agregar una nueva nota
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => AddNoteScreen(uid: uid),
+      ),
+    );
+
+    // Después de agregar una nota, actualiza la lista
+    _updateNotes();
   }
 
   @override
@@ -68,50 +74,47 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox(height: 50),
-                const Text(
-                  'Tus Notas',
-                  style: TextStyle(
-                    color: Color.fromARGB(255, 48, 89, 161),
-                    fontSize: 16,
-                  ),
-                ),
-                MyButton(
-                  onTap: Update,
-                  buttonText: 'Actualizar',
-                ),
-                const SizedBox(height: 20), // Añade espacio entre los botones
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => AddNoteScreen(uid: uid),
-                      ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: const Color.fromARGB(255, 255, 255,
-                        255), backgroundColor: const Color.fromARGB(
-                        255, 48, 89, 161), // Cambia el color del texto a blanco
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 16,
-                        horizontal: 32), // Ajusta el tamaño del botón
-                  ),
-                  child: const Text('Agregar nota',
-                      style: TextStyle(
-                          fontSize: 18)), // Ajusta el tamaño del texto
-                ),
-                const SizedBox(height: 30),
-              ],
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SizedBox(height: 50),
+            const Text(
+              'Tus Notas',
+              style: TextStyle(
+                color: Color.fromARGB(255, 48, 89, 161),
+                fontSize: 16,
+              ),
             ),
-          ),
+            const SizedBox(height: 30),
+            Expanded(
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: noteModel.notes.length,
+                itemBuilder: (context, index) {
+                  Note note = noteModel.notes[index];
+                  return Card(
+                    margin: const EdgeInsets.symmetric(vertical: 5),
+                    child: ListTile(
+                      title: Text( note.title),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(note.description),
+                          Text('Estado: ${note.status}'),
+                          Text('Fecha: ${note.date}'),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _createNote,
+        child: Icon(Icons.add),
       ),
     );
   }
