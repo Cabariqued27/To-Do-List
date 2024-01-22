@@ -43,15 +43,17 @@ class _MyHomePageState extends State<MyHomePage> {
   late CollectionReference noteCollection;
   final String uid;
   _MyHomePageState(this.uid);
-  String selectedStatus = '';
+  String selectedStatus = 'Pendiente';
 
   @override
   void initState() {
     super.initState();
     _dateController.text = DateFormat('dd/MM/yyyy').format(DateTime.now());
     noteCollection = FirebaseFirestore.instance.collection('notes');
+    
   }
 
+  
   Future crear() async {
   // Validar que los campos de título y descripción no estén vacíos
   if (_titleController.text.trim().isEmpty || _descriptionController.text.trim().isEmpty) {
@@ -89,6 +91,8 @@ class _MyHomePageState extends State<MyHomePage> {
       duration: Duration(seconds: 3),
     ),
   );
+
+ 
 
   // Limpiar los controladores después de agregar la nota
   _titleController.clear();

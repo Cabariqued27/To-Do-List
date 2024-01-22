@@ -16,14 +16,16 @@ class NoteData extends ChangeNotifier {
   }
 
   Future<void> getNotesFromDB() async {
-    await FirebaseFirestore.instance.collection("Notes").get().then((event) {
+    await FirebaseFirestore.instance.collection("notes").get().then((event) {
       for (var doc in event.docs) {
         Note note = Note(
-          /*idu: doc.id,*/
+          idu: doc.id,
           title: doc['title'],
           description: doc['description'], 
         );
-
+        
+          print(note);
+        
         _notes.add(note);
       }
       notifyListeners();
