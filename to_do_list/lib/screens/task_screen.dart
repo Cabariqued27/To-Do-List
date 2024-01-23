@@ -48,15 +48,15 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     _dateController.text = DateFormat('dd/MM/yyyy').format(DateTime.now());
     noteCollection = FirebaseFirestore.instance.collection('tasks');
-    _updateNotes(); // Llama a la función _updateNotes en initState
+    _updateTasks(); // Llama a la función _updateTasks en initState
   }
 
-  Future<void> _updateNotes() async {
+  Future<void> _updateTasks() async {
     await taskModel.geTasksFromDB(uid);
     setState(() {}); // Actualiza el estado para reconstruir la interfaz con las nuevas notas
   }
 
-  Future<void> _createNote() async {
+  Future<void> _createTask() async {
     // Abre la pantalla para agregar una nueva nota
     await Navigator.push(
       context,
@@ -66,7 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
 
     // Después de agregar una nota, actualiza la lista
-    _updateNotes();
+    _updateTasks();
   }
 
   @override
@@ -113,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _createNote,
+        onPressed: _createTask,
         child: Icon(Icons.add),
       ),
     );

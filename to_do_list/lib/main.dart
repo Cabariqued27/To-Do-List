@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do_list/firebase_options.dart';
 import 'package:to_do_list/screens/login_screen.dart';
-import 'package:to_do_list/screens/note_screen.dart';
+import 'package:to_do_list/screens/task_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
