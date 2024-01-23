@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:to_do_list/models/task.dart';
 import 'package:to_do_list/screens/task_screen.dart';
 import 'package:to_do_list/services/get_note.dart';
 import 'package:to_do_list/widgets/dropdown.dart';
@@ -90,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  Future Update() async {
+  Future update() async {
     // Obtener la referencia de la colección "tasks" en Firestore
     CollectionReference tasks = FirebaseFirestore.instance.collection('tasks');
 
@@ -174,7 +173,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 const SizedBox(height: 10),
                 MyButton(
-                  onTap: Update,
+                  onTap: update,
                   buttonText: 'Actualizar',
                 ),
                 const SizedBox(height: 50),

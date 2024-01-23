@@ -76,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
     status: selectedStatus,
     date: _dateController.text.trim(),
   );
-
+  print(newTask);
   await taskCollection.doc().set({
     'Idu': newTask.idu,
     'Title': newTask.title,
@@ -85,20 +85,8 @@ class _MyHomePageState extends State<MyHomePage> {
     'Date': newTask.date,
   });
 
-  // Muestra el mensaje después de agregar la nota
-  ScaffoldMessenger.of(context).showSnackBar(
-    const SnackBar(
-      content: Text('Tarea agregada con éxito'),
-      duration: Duration(seconds: 3),
-    ),
-  );
-
- 
-
-  // Limpiar los controladores después de agregar la nota
   _titleController.clear();
   _descriptionController.clear();
-  print(taskModel.geTasksFromDB(uid));
 
   await Navigator.push(
       context,

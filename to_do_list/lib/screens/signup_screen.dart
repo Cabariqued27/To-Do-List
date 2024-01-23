@@ -83,8 +83,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
         }
       }
     }
-    Navigator.pop(context);
-    return const LoginScreen();
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => LoginScreen(),
+      ),
+    );
   }
 
   bool passwordConfirmed() {
@@ -95,7 +99,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Center(
