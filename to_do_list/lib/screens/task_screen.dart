@@ -100,6 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(note.description),
+                          Text('Traducción: ${note.traduccion}'),
                           Text('Estado: ${note.status}'),
                           Text('Fecha: ${note.date}'),
                         ],

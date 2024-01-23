@@ -33,6 +33,7 @@ class TaskData extends ChangeNotifier {
           idu: docSnapshot.data()["Idu"],
           title:  docSnapshot.data()["Title"],
           description:  docSnapshot.data()["Description"],
+          traduccion:  docSnapshot.data()["translatedDescription"],
           status:  docSnapshot.data()["Status"],
           date:  docSnapshot.data()["Date"],
 
@@ -53,6 +54,7 @@ class TaskData extends ChangeNotifier {
       print("IDu: ${note.idu}");
       print("Title: ${note.title}");
       print("Description: ${note.description}");
+      print("Traducción: ${note.traduccion}");
       print("Status: ${note.status}");
       print("Date: ${note.date}");
       // Puedes agregar más campos según la estructura de tu modelo Note

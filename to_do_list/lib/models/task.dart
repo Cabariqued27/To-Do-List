@@ -5,6 +5,7 @@ class Task {
   String description;
   String status;
   String date;
+  String traduccion;
 
   Task({
     this.id ='',
@@ -12,7 +13,8 @@ class Task {
     this.title = '',
     this.description = '',
     this.status = '',
-    this.date = '',
+    this.date = '', 
+    this.traduccion='',
   });
 
 }
