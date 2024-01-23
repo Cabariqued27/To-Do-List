@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:to_do_list/models/task.dart';
+import 'package:to_do_list/screens/task_screen.dart';
 import 'package:to_do_list/services/get_note.dart';
 import 'package:to_do_list/widgets/dropdown.dart';
 import 'package:to_do_list/widgets/my_button.dart';
@@ -98,6 +99,13 @@ class _MyHomePageState extends State<MyHomePage> {
   _titleController.clear();
   _descriptionController.clear();
   print(taskModel.geTasksFromDB(uid));
+
+  await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => TaskScreen(uid: uid),
+      ),
+    );
 }
 
   @override

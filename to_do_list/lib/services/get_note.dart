@@ -17,7 +17,11 @@ class TaskData extends ChangeNotifier {
 
   Future<void> geTasksFromDB(uid) async {
     try {
-      var querySnapshot = await FirebaseFirestore.instance.collection("tasks").where("Idu", isEqualTo: uid).get();
+      var querySnapshot = await FirebaseFirestore.instance
+      .collection("tasks")
+      .where("Idu", isEqualTo: uid)
+      .orderBy("Date", descending: true)
+      .orderBy("Status", descending: true).get();
 
       print("Successfully completed");
 
