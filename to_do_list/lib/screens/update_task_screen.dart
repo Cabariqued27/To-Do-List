@@ -11,13 +11,16 @@ import 'package:to_do_list/widgets/my_textfield.dart';
 TaskData taskModel = TaskData();
 
 void main() {
-  runApp(const UpdateTaskScreen(uid: '', task: '',));
+  runApp(const UpdateTaskScreen(
+    uid: '',
+    task: '',
+  ));
 }
 
 class UpdateTaskScreen extends StatelessWidget {
   final String uid;
   final String task;
-  const UpdateTaskScreen({super.key, required this.uid,  required this.task});
+  const UpdateTaskScreen({super.key, required this.uid, required this.task});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +29,7 @@ class UpdateTaskScreen extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.orange,
       ),
-      home: MyHomePage(uid: uid, task:task),
+      home: MyHomePage(uid: uid, task: task),
     );
   }
 }
@@ -42,6 +45,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _statusController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
   late CollectionReference taskCollection;
   final String uid;
@@ -53,67 +57,70 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     _dateController.text = DateFormat('dd/MM/yyyy').format(DateTime.now());
+    getData();
   }
 
-  
+  Future getData() async {
+    // Obtener la referencia de la colección "tasks" en Firestore
+    CollectionReference tasks = FirebaseFirestore.instance.collection('tasks');
+
+    try {
+      // Obtener el documento de la tarea con el ID almacenado en la variable "task"
+      DocumentSnapshot taskSnapshot = await tasks.doc(task).get();
+
+      // Verificar si el documento existe antes de intentar acceder a los datos
+      if (taskSnapshot.exists) {
+        // Obtener los datos de la tarea y actualizar los controladores
+        Map<String, dynamic> taskData =
+            taskSnapshot.data() as Map<String, dynamic>;
+        _titleController.text = taskData['Title'] ?? '';
+        _statusController.text = taskData['Status'] ?? '';
+        _descriptionController.text = taskData['Description'] ?? '';
+        print(_titleController.text);
+        print(_descriptionController.text);
+        print(_statusController.text);
+        // Puedes agregar más campos según la estructura de tu modelo de tarea
+      } else {
+        // Manejar el caso en el que la tarea no existe
+        print('La tarea con ID $task no existe.');
+      }
+    } catch (error) {
+      // Manejar cualquier error que pueda ocurrir durante la consulta a Firestore
+      print('Error al obtener la tarea: $error');
+    }
+  }
+
   Future Update() async {
-  // Validar que los campos de título y descripción no estén vacíos
-  if (_titleController.text.trim().isEmpty || _descriptionController.text.trim().isEmpty) {
-    // Muestra un mensaje de error si alguno de los campos está vacío
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Por favor, completa los campos de título y descripción.'),
-        duration: Duration(seconds: 3),
-      ),
-    );
-    return; // Salir de la función si hay campos vacíos
-  }
+    // Obtener la referencia de la colección "tasks" en Firestore
+    CollectionReference tasks = FirebaseFirestore.instance.collection('tasks');
 
-  // Continuar con la creación de la nota si los campos no están vacíos
-  Task newTask = Task(
-    idu: uid,
-    title: _titleController.text.trim(),
-    description: _descriptionController.text.trim(),
-    status: selectedStatus,
-    date: _dateController.text.trim(),
-  );
+    try {
+      await tasks.doc(task).update({
+        'Status': selectedStatus,
+      });
 
-  await taskCollection.doc().set({
-    'Idu': newTask.idu,
-    'Title': newTask.title,
-    'Description': newTask.description,
-    'Status': newTask.status,
-    'Date': newTask.date,
-  });
-
-  // Muestra el mensaje después de agregar la nota
-  ScaffoldMessenger.of(context).showSnackBar(
-    const SnackBar(
-      content: Text('Estado actualizado'),
-      duration: Duration(seconds: 3),
-    ),
-  );
-
- 
-
-  // Limpiar los controladores después de agregar la nota
-  _titleController.clear();
-  _descriptionController.clear();
-  print(taskModel.geTasksFromDB(uid));
-
-  await Navigator.push(
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Estado actualizado con éxito'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+    } catch (error) {
+      print('Error al actualizar la tarea: $error');
+    }
+    await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => TaskScreen(uid: uid),
       ),
     );
-}
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:
-          const Color.fromARGB(255, 255, 255, 255), // Set background color to orange
+      backgroundColor: const Color.fromARGB(
+          255, 255, 255, 255), // Set background color to orange
       body: SafeArea(
         child: SingleChildScrollView(
           child: Center(
@@ -122,7 +129,7 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 const SizedBox(height: 50),
                 const Text(
-                  'Gestor de Tareas',
+                  'Actualizar tarea',
                   style: TextStyle(
                     color: Color.fromARGB(255, 48, 89, 161),
                     fontSize: 16,
@@ -133,14 +140,14 @@ class _MyHomePageState extends State<MyHomePage> {
                   controller: _titleController,
                   labelText: 'Título',
                   obscureText: false,
-                  readOnly: false,
+                  readOnly: true,
                 ),
                 const SizedBox(height: 10),
                 MyTextField(
                   controller: _descriptionController,
                   labelText: 'Descripción',
                   obscureText: false,
-                  readOnly: false,
+                  readOnly: true,
                 ),
                 const SizedBox(height: 10),
                 const Text(
@@ -168,7 +175,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 const SizedBox(height: 10),
                 MyButton(
                   onTap: Update,
-                  buttonText: 'Agregar',
+                  buttonText: 'Actualizar',
                 ),
                 const SizedBox(height: 50),
               ],
