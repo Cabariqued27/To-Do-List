@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:to_do_list/models/task.dart';
 import 'package:to_do_list/screens/add_task_screen.dart';
+import 'package:to_do_list/screens/update_task_screen.dart';
 import 'package:to_do_list/services/get_note.dart';
 import 'package:to_do_list/widgets/my_button.dart';
 
@@ -48,12 +49,25 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     _dateController.text = DateFormat('dd/MM/yyyy').format(DateTime.now());
     noteCollection = FirebaseFirestore.instance.collection('tasks');
-    _updateTasks(); // Llama a la función _updateTasks en initState
+    _gettingTasks(); // Llama a la función _gettingTasks en initState
   }
 
-  Future<void> _updateTasks() async {
+  Future<void> _gettingTasks() async {
     await taskModel.geTasksFromDB(uid);
-    setState(() {}); // Actualiza el estado para reconstruir la interfaz con las nuevas notas
+    setState(
+        () {}); // Actualiza el estado para reconstruir la interfaz con las nuevas notas
+  }
+
+  Future<void> _editTask(task,uid) async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => UpdateTaskScreen(uid: uid, task: task),
+      ),
+    );
+
+    // Después de agregar una nota, actualiza la lista
+    _gettingTasks();// Actualiza el estado para reconstruir la interfaz con las nuevas notas
   }
 
   Future<void> _createTask() async {
@@ -66,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
 
     // Después de agregar una nota, actualiza la lista
-    _updateTasks();
+    _gettingTasks();
   }
 
   @override
@@ -91,19 +105,29 @@ class _MyHomePageState extends State<MyHomePage> {
                 shrinkWrap: true,
                 itemCount: taskModel.tasks.length,
                 itemBuilder: (context, index) {
-                  Task note = taskModel.tasks[index];
+                  Task task = taskModel.tasks[index];
                   return Card(
                     margin: const EdgeInsets.symmetric(vertical: 5),
                     child: ListTile(
-                      title: Text( note.title),
+                      title: Text(task.title),
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(note.description),
-                          Text('Traducción: ${note.traduccion}'),
-                          Text('Estado: ${note.status}'),
-                          Text('Fecha: ${note.date}'),
+                          Text(task.description),
+                          Text('Traducción: ${task.traduccion}'),
+                          Text('Estado: ${task.status}'),
+                          Text('Fecha: ${task.date}'),
                         ],
+                      ),
+                      trailing: IconButton(
+                        icon: Icon(Icons.edit),
+                        onPressed: () {
+                          // Aquí puedes agregar la lógica para editar la tarea
+                          print(task.id);
+                          print(uid);
+                          _editTask(task.id,uid);
+                          
+                        },
                       ),
                     ),
                   );
