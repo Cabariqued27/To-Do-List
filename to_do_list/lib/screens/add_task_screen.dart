@@ -1,26 +1,26 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:to_do_list/models/note.dart';
+import 'package:to_do_list/models/task.dart';
 import 'package:to_do_list/services/get_note.dart';
 import 'package:to_do_list/widgets/dropdown.dart';
 import 'package:to_do_list/widgets/my_button.dart';
 import 'package:to_do_list/widgets/my_textfield.dart';
 
-NoteData noteModel = NoteData();
+TaskData taskModel = TaskData();
 
 void main() {
-  runApp(const AddNoteScreen(uid: ''));
+  runApp(const AddTaskScreen(uid: ''));
 }
 
-class AddNoteScreen extends StatelessWidget {
+class AddTaskScreen extends StatelessWidget {
   final String uid;
-  const AddNoteScreen({super.key, required this.uid});
+  const AddTaskScreen({super.key, required this.uid});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Gestión de Eventos',
+      title: 'Gestión Tareas',
       theme: ThemeData(
         primarySwatch: Colors.orange,
       ),
@@ -40,7 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
-  late CollectionReference noteCollection;
+  late CollectionReference taskCollection;
   final String uid;
   _MyHomePageState(this.uid);
   String selectedStatus = 'Pendiente';
@@ -49,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     _dateController.text = DateFormat('dd/MM/yyyy').format(DateTime.now());
-    noteCollection = FirebaseFirestore.instance.collection('notes');
+    taskCollection = FirebaseFirestore.instance.collection('tasks');
     
   }
 
@@ -68,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   // Continuar con la creación de la nota si los campos no están vacíos
-  Note newNote = Note(
+  Task newTask = Task(
     idu: uid,
     title: _titleController.text.trim(),
     description: _descriptionController.text.trim(),
@@ -76,18 +76,18 @@ class _MyHomePageState extends State<MyHomePage> {
     date: _dateController.text.trim(),
   );
 
-  await noteCollection.doc().set({
-    'Idu': newNote.idu,
-    'Title': newNote.title,
-    'Description': newNote.description,
-    'Status': newNote.status,
-    'Date': newNote.date,
+  await taskCollection.doc().set({
+    'Idu': newTask.idu,
+    'Title': newTask.title,
+    'Description': newTask.description,
+    'Status': newTask.status,
+    'Date': newTask.date,
   });
 
   // Muestra el mensaje después de agregar la nota
   ScaffoldMessenger.of(context).showSnackBar(
     const SnackBar(
-      content: Text('Nota agregada con éxito'),
+      content: Text('Tarea agregada con éxito'),
       duration: Duration(seconds: 3),
     ),
   );
@@ -97,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
   // Limpiar los controladores después de agregar la nota
   _titleController.clear();
   _descriptionController.clear();
-  print(noteModel.getNotesFromDB(uid));
+  print(taskModel.geTasksFromDB(uid));
 }
 
   @override
@@ -113,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 const SizedBox(height: 50),
                 const Text(
-                  'Gestor de notas',
+                  'Gestor de Tareas',
                   style: TextStyle(
                     color: Color.fromARGB(255, 48, 89, 161),
                     fontSize: 16,

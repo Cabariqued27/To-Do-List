@@ -1,20 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:to_do_list/models/note.dart';
-import 'package:to_do_list/screens/add_note_screen.dart';
+import 'package:to_do_list/models/task.dart';
+import 'package:to_do_list/screens/add_task_screen.dart';
 import 'package:to_do_list/services/get_note.dart';
 import 'package:to_do_list/widgets/my_button.dart';
 
-NoteData noteModel = NoteData();
+TaskData taskModel = TaskData();
 
 void main() {
-  runApp(const NoteScreen(uid: ''));
+  runApp(const TaskScreen(uid: ''));
 }
 
-class NoteScreen extends StatelessWidget {
+class TaskScreen extends StatelessWidget {
   final String uid;
-  const NoteScreen({super.key, required this.uid});
+  const TaskScreen({super.key, required this.uid});
 
   @override
   Widget build(BuildContext context) {
@@ -47,12 +47,12 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     _dateController.text = DateFormat('dd/MM/yyyy').format(DateTime.now());
-    noteCollection = FirebaseFirestore.instance.collection('notes');
+    noteCollection = FirebaseFirestore.instance.collection('tasks');
     _updateNotes(); // Llama a la función _updateNotes en initState
   }
 
   Future<void> _updateNotes() async {
-    await noteModel.getNotesFromDB(uid);
+    await taskModel.geTasksFromDB(uid);
     setState(() {}); // Actualiza el estado para reconstruir la interfaz con las nuevas notas
   }
 
@@ -61,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
     await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => AddNoteScreen(uid: uid),
+        builder: (context) => AddTaskScreen(uid: uid),
       ),
     );
 
@@ -79,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             const SizedBox(height: 50),
             const Text(
-              'Tus Notas',
+              'Tus Tareas',
               style: TextStyle(
                 color: Color.fromARGB(255, 48, 89, 161),
                 fontSize: 16,
@@ -89,9 +89,9 @@ class _MyHomePageState extends State<MyHomePage> {
             Expanded(
               child: ListView.builder(
                 shrinkWrap: true,
-                itemCount: noteModel.notes.length,
+                itemCount: taskModel.tasks.length,
                 itemBuilder: (context, index) {
-                  Note note = noteModel.notes[index];
+                  Task note = taskModel.tasks[index];
                   return Card(
                     margin: const EdgeInsets.symmetric(vertical: 5),
                     child: ListTile(

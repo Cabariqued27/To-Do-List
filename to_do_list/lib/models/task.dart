@@ -1,4 +1,4 @@
-class Note {
+class Task {
   String id;
   String idu;
   String title;
@@ -6,7 +6,7 @@ class Note {
   String status;
   String date;
 
-  Note({
+  Task({
     this.id ='',
     this.idu = '',
     this.title = '',

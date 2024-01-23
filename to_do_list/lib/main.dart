@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do_list/firebase_options.dart';
 import 'package:to_do_list/screens/login_screen.dart';
-import 'package:to_do_list/screens/add_note_screen.dart';
+import 'package:to_do_list/screens/note_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,12 +32,12 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => noteModel),
+        ChangeNotifierProvider(create: (_) => taskModel),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(useMaterial3: true, colorSchemeSeed: Colors.white),
-        home:  const LoginScreen(),
+        home:  const /*TaskScreen(uid: 'GSaTsnC0mAbo1HUEqy53xAEyJbM2',)*/LoginScreen(),
       ),
     );
   }

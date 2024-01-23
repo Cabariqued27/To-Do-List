@@ -1,33 +1,33 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
-import '../models/note.dart';
+import '../models/task.dart';
 
-class NoteData extends ChangeNotifier {
-  List<Note> _notes = [];
-  List<Note> get notes => _notes;
+class TaskData extends ChangeNotifier {
+  List<Task> _tasks = [];
+  List<Task> get tasks => _tasks;
 
-  Future<void> addNote(Note note) async {
-    _notes.add(note);
+  Future<void> addNote(Task task) async {
+    _tasks.add(task);
     //await Note.save();
     if (kDebugMode) {
-      print(note.idu);
+      print(task.idu);
     }
     notifyListeners();
   }
 
-  Future<void> getNotesFromDB(uid) async {
+  Future<void> geTasksFromDB(uid) async {
     try {
-      var querySnapshot = await FirebaseFirestore.instance.collection("notes").where("Idu", isEqualTo: uid).get();
+      var querySnapshot = await FirebaseFirestore.instance.collection("tasks").where("Idu", isEqualTo: uid).get();
 
       print("Successfully completed");
 
       // Limpiar la lista antes de agregar nuevas notas
-      _notes.clear();
+      _tasks.clear();
 
       for (var docSnapshot in querySnapshot.docs) {
         print('${docSnapshot.id} => ${docSnapshot.data()}');
-        // Crear instancias de Note y agregarlas a la lista _notes
-        Note note = Note(
+        // Crear instancias de Note y agregarlas a la lista _tasks
+        Task note = Task(
           // Aquí debes mapear los campos según la estructura de tu modelo Note
           id: docSnapshot.id,
           idu: docSnapshot.data()["Idu"],
@@ -38,7 +38,7 @@ class NoteData extends ChangeNotifier {
 
           // Otros campos...
         );
-        _notes.add(note);
+        _tasks.add(note);
       }
 
       // Notificar a los listeners que los datos han sido actualizados
@@ -47,8 +47,8 @@ class NoteData extends ChangeNotifier {
       print("Error completing: $e");
     }
   }
-  void printNotes() {
-    for (var note in _notes) {
+  void printtasks() {
+    for (var note in _tasks) {
       print("ID: ${note.id}");
       print("IDu: ${note.idu}");
       print("Title: ${note.title}");
