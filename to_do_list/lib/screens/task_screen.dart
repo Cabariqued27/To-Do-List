@@ -98,7 +98,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 itemBuilder: (context, index) {
                   Task task = taskModel.tasks[index];
                   return Dismissible(
-                    key: Key(task.id), // Usamos el ID como clave para el widget Dismissible
+                    key: Key(task
+                        .id), // Usamos el ID como clave para el widget Dismissible
                     onDismissed: (direction) {
                       // Eliminamos la tarea de la base de datos
                       _deleteTask(task.id);
@@ -114,22 +115,95 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       ),
                     ),
-                    child: ListTile(
-                      title: Text(task.title),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(task.description),
-                          Text('Traducción: ${task.traduccion}'),
-                          Text('Estado: ${task.status}'),
-                          Text('Fecha: ${task.date}'),
-                        ],
+                    child: Container(
+                      margin: const EdgeInsets.all(10), // Margen para el contorno
+                      padding: const EdgeInsets.all(10), // Espaciado interno
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.grey, // Color del borde
+                          width: 1, // Ancho del borde
+                        ),
+                        borderRadius:
+                            BorderRadius.circular(8), // Radio de esquinas del contorno
                       ),
-                      trailing: IconButton(
-                        icon: const Icon(Icons.edit),
-                        onPressed: () {
-                          _editTask(task.id, uid);
-                        },
+                      child: ListTile(
+                        title: Text(
+                          task.title,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold, // Texto en negrita
+                          ),
+                        ),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(
+                                height:
+                                    5), // Espacio entre el título y la descripción
+                            Text(
+                              task.description,
+                            ),
+                            const SizedBox(
+                                height:
+                                    10), // Espacio entre la descripción y "Translated from Spanish By Google"
+                            const Text(
+                              'Translated from Spanish By Google',
+                              style: TextStyle(
+                                color: Colors
+                                    .blue, // Ajusta el color según tus preferencias
+                              ),
+                            ),
+                            const SizedBox(
+                                height:
+                                    5), // Espacio entre "Translated from Spanish By Google" y la traducción
+                            Text(
+                              task.traduccion,
+                            ),
+                            const SizedBox(
+                                height:
+                                    10), // Espacio entre la traducción y la fecha
+                            Row(
+                              children: [
+                                const Icon(Icons.calendar_today,
+                                    size: 16, color: Colors.grey),
+                                const SizedBox(width: 5),
+                                Text(
+                                  'Fecha: ${task.date}',
+                                  style: const TextStyle(
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                                height: 10), // Espacio entre la fecha y el estado
+                            Row(
+                              children: [
+                                Icon(Icons.check_circle,
+                                    size: 16,
+                                    color: task.status == 'Completado'
+                                        ? Colors.green
+                                        : Colors.red),
+                                const SizedBox(width: 5),
+                                Text(
+                                  'Estado: ${task.status}',
+                                  style: TextStyle(
+                                    color: task.status == 'Completado'
+                                        ? Colors.green
+                                        : Colors.red,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                                height: 10), // Espacio adicional al final
+                          ],
+                        ),
+                        trailing: IconButton(
+                          icon: const Icon(Icons.edit),
+                          onPressed: () {
+                            _editTask(task.id, uid);
+                          },
+                        ),
                       ),
                     ),
                   );
