@@ -1,7 +1,7 @@
 
 # Task
 
-Prueba Técnica el puesto de Mobile Developer en la empresa Grupo R5
+Prueba Técnica para el puesto de Mobile Developer en la empresa Grupo R5
 
 
 ## Manual de usuario
@@ -10,19 +10,19 @@ Prueba Técnica el puesto de Mobile Developer en la empresa Grupo R5
 
 Para registrar un nuevo usuario, sigue estos pasos:
 - Asegúrate de que las contraseñas coincidan.
-- La longitud de la contraseña debe ser de al menos 6 caracteres
+- La longitud de la contraseña debe ser de al menos 6 caracteres.
 
 #### Agregar una Tarea:
 
 Desde la pantalla de inicio:
 - Pulsa el botón flotante.
-- Luego, selecciona el icono de "+" para agregar una nueva tarea.
+- Luego, Pulsa el icono de "+" para agregar una nueva tarea.
 
 ####  Descargar Tareas desde la Base de Datos:
 
 Desde la pantalla de inicio:
 - Pulsa el botón flotante.
-- Luego, selecciona el icono de descarga para mostrar las tareas.
+- Luego, Pulsa el icono de descarga para mostrar las tareas.
 
 
 ## Bonus
