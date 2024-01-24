@@ -55,6 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
     _dateController.text = DateFormat('dd/MM/yyyy').format(DateTime.now());
     noteCollection = FirebaseFirestore.instance.collection('tasks');
     _gettingTasks();
+    
   }
 
   Future<void> _gettingTasks() async {
@@ -87,7 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         actions: [
           Text(
             "Bienvenido, ${user.email!}", // Agregado: Muestra el correo electrónico del usuario

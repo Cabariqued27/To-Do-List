@@ -136,22 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   obscureText: true, readOnly: false,
                 ),
 
-                const SizedBox(height: 10),
-
-                // forgot password?
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        '¿Ha olvidado su contraseña?',
-                        style: TextStyle(
-                            color: Color.fromARGB(255, 48, 89, 161)), // Set text color to white
-                      ),
-                    ],
-                  ),
-                ),
+                
 
                 const SizedBox(height: 25),
 

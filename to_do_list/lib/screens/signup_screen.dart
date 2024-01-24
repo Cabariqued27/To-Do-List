@@ -30,11 +30,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void initState() {
     super.initState();
     usersCollection = FirebaseFirestore.instance.collection('users');
-    // Set default values for each controller
-    _emailController.text = 'default@gmail.com';
-    _passwordController.text = '123456';
-    _confirmpasswordController.text = '123456';
-    _nameController.text = 'Default Name';
+   
   }
 
   @override
