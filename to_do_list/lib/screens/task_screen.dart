@@ -213,9 +213,28 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _createTask,
-        child: const Icon(Icons.add),
+       floatingActionButton: PopupMenuButton<String>(
+        onSelected: (value) {
+          if (value == 'Create') {
+            _createTask();
+          } else if (value == 'Update') {
+            _gettingTasks();_gettingTasks();
+          }
+        },
+        itemBuilder: (BuildContext context) => [
+          const PopupMenuItem<String>(
+            value: 'Create',
+            child: Icon(Icons.add),
+          ),
+          const PopupMenuItem<String>(
+            value: 'Update',
+            child: Icon(Icons.download_sharp),
+          ),
+        ],
+        child: const FloatingActionButton(
+          onPressed: null,
+          child: Icon(Icons.toc_outlined),
+        ),
       ),
     );
   }

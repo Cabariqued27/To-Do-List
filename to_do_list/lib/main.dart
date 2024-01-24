@@ -37,7 +37,7 @@ class MainApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(useMaterial3: true, colorSchemeSeed: Colors.white),
-        home:  const TaskScreen(uid: 'LRbgEgW44BTJq3FS4JhnYMCrFfU2',)//LoginScreen(),
+        home:  const LoginScreen(),
       ),
     );
   }
