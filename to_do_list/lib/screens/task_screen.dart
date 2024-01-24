@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -41,6 +42,13 @@ class _MyHomePageState extends State<MyHomePage> {
   final String uid;
   _MyHomePageState(this.uid);
 
+  final user = FirebaseAuth.instance.currentUser!;
+
+  // sign user out method
+  void signUserOut() {
+    FirebaseAuth.instance.signOut();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -78,6 +86,23 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        actions: [
+          Text(
+            "Bienvenido, ${user.email!}", // Agregado: Muestra el correo electrónico del usuario
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          IconButton(
+            onPressed: signUserOut,
+            icon: const Icon(Icons.logout),
+          ),
+          
+        ],
+      ),
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -116,15 +141,16 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                     child: Container(
-                      margin: const EdgeInsets.all(10), // Margen para el contorno
+                      margin:
+                          const EdgeInsets.all(10), // Margen para el contorno
                       padding: const EdgeInsets.all(10), // Espaciado interno
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: Colors.grey, // Color del borde
                           width: 1, // Ancho del borde
                         ),
-                        borderRadius:
-                            BorderRadius.circular(8), // Radio de esquinas del contorno
+                        borderRadius: BorderRadius.circular(
+                            8), // Radio de esquinas del contorno
                       ),
                       child: ListTile(
                         title: Text(
@@ -175,7 +201,8 @@ class _MyHomePageState extends State<MyHomePage> {
                               ],
                             ),
                             const SizedBox(
-                                height: 10), // Espacio entre la fecha y el estado
+                                height:
+                                    10), // Espacio entre la fecha y el estado
                             Row(
                               children: [
                                 Icon(Icons.check_circle,
@@ -213,12 +240,13 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-       floatingActionButton: PopupMenuButton<String>(
+      floatingActionButton: PopupMenuButton<String>(
         onSelected: (value) {
           if (value == 'Create') {
             _createTask();
           } else if (value == 'Update') {
-            _gettingTasks();_gettingTasks();
+            _gettingTasks();
+            _gettingTasks();
           }
         },
         itemBuilder: (BuildContext context) => [
